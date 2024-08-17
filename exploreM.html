@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore</title>
+    <link rel="stylesheet" href="exploreM.css">
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+
+<body>
+    <!--plug in purpose-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v20.0"
+        nonce="d5yclkMm"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- navigation bar -->
+    <header role="banner">
+        <div class="navbar">
+            <div class="logo">
+                <img src="sourceImg/TravelLogo.png" alt="Travel Malaysia Logo">
+                <span>Traveling Malaysia</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a class="active" href="exploreM.html">Explore</a>
+                <a href="blog.html">Blog</a>
+                <a href="about.html">About Us</a>
+                <a href="contactUs.html">Contact Us</a>
+            </nav>
+        </div>
+
+        <header class="searching-container">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Where would you like to go?">
+                <button onclick="searchTours()">SEARCH AGAIN</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="filters">
+                <label for="dateFilter">Filter by date:</label>
+                <input type="date" id="dateFilter">
+
+                <label for="priceFilter">Max price:</label>
+                <input type="number" id="priceFilter" min="0">
+
+                <button onclick="applyFilters()">Apply Filters</button>
+            </div>
+
+            <div id="tourList"></div>
+        </main>
+
+        <!--Facebook plugin-->
+        <div class="facebook-section">
+            <h2>Follow Tourism Malaysia on Facebook</h2>
+            <p>Stay updated with the latest travel information, events, and beautiful destinations in Malaysia by
+                following the official Tourism Malaysia Facebook page.</p>
+            <div class="fb-page" data-href="https://www.facebook.com/malaysia.travel.my" data-tabs="timeline"
+                data-width="800" data-height="" data-small-header="false" data-adapt-container-width="true"
+                data-hide-cover="false" data-show-facepile="true">
+                <blockquote cite="https://www.facebook.com/malaysia.travel.my" class="fb-xfbml-parse-ignore">
+                    <a href="https://www.facebook.com/malaysia.travel.my">Tourism Malaysia</a>
+                </blockquote>
+            </div>
+        </div>
+
+        <script>
+            // Load Facebook SDK
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            // Animation on scroll
+            function isElementInViewport(el) {
+                var rect = el.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+
+            function handleScroll() {
+                var section = document.querySelector('.facebook-section');
+                if (isElementInViewport(section)) {
+                    section.classList.add('visible');
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+            window.addEventListener('load', handleScroll);
+        </script>
+
+        <!--User Feedback-->
+        <div class="feedback-container">
+            <h1 class="header" id="header">User Feedback</h1>
+            <div class="feedback" id="feedback">
+                <div class="feedback-row">
+                    <div class="feedback-card">
+                        <p>"The journey is fantastic! It has changed my life!"</p>
+                        <span class="user">- Jane Doe</span>
+                        <span class="date">March 10, 2023</span>
+                    </div>
+                    <div class="feedback-card">
+                        <p>"Great guiding and good planning."</p>
+                        <span class="user">- John Smith</span>
+                        <span class="date">April 5, 2023</span>
+                    </div>
+                    <div class="feedback-card">
+                        <p>"Highly recommend to everyone!"</p>
+                        <span class="user">- Alice Johnson</span>
+                        <span class="date">April 12, 2023</span>
+                    </div>
+                </div>
+                <div class="feedback-row">
+                    <div class="feedback-card">
+                        <p>"Amazing quality and value for money."</p>
+                        <span class="user">- Michael Brown</span>
+                        <span class="date">May 1, 2023</span>
+                    </div>
+                    <div class="feedback-card">
+                        <p>"Exceeded my expectations in every way."</p>
+                        <span class="user">- Sarah Lee</span>
+                        <span class="date">June 15, 2023</span>
+                    </div>
+                    <div class="feedback-card">
+                        <p>"Amazing trip"</p>
+                        <span class="user">- David Kim</span>
+                        <span class="date">July 20, 2023</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            document.addEventListener('scroll', function () {
+                const header = document.getElementById('header');
+                const feedbackDiv = document.getElementById('feedback');
+                const headerRect = header.getBoundingClientRect();
+                const feedbackRect = feedbackDiv.getBoundingClientRect();
+                const viewHeight = window.innerHeight;
+
+                if (headerRect.top <= viewHeight && headerRect.bottom >= 0) {
+                    header.classList.add('visible');
+                }
+
+                if (feedbackRect.top <= viewHeight && feedbackRect.bottom >= 0) {
+                    feedbackDiv.classList.add('visible');
+                }
+            });
+        </script>
+
+        <!--Footer-->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">T&C</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#">Schedule</a></li>
+                        <li><a href="#">Share</a></li>
+                        <li><a href="#">Sign</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Youtube</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Use Cases</h3>
+                    <ul>
+                        <li><a href="#">Educational Institutions</a></li>
+                        <li><a href="#">Professional Services</a></li>
+                        <li><a href="#">Freelancers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="logo">
+                    <img src="sourceImg/TravelLogo.png" alt="Event Company Logo">
+                    <span>Traveling Malaysia</span>
+                </div>
+                <div class="copyright">
+                    Traveling Malaysia is created by the team at <a href="#">ABCD</a> | © 2024 ABCD ALL RIGHTS RESERVED
+                </div>
+                <div class="cookies-preferences">
+                    <button>🍪 Cookies Preferences</button>
+                </div>
+            </div>
+        </footer>
+
+        <script src="exploreMScript.js"></script>
+</body>
+
+</html>
